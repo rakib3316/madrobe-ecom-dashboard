@@ -1,6 +1,6 @@
 import { Layout, Menu } from "antd";
-import { sidebarRoutesGenerator } from "../../utils/sidebarRoutesGenerator";
 import { routeSources } from "../../routes/source.routes";
+import { sidebarRoutesGenerator } from "../../utils/sidebarRoutesGenerator";
 const { Sider } = Layout;
 
 export default function Sidebar() {
@@ -13,13 +13,14 @@ export default function Sidebar() {
       onCollapse={(collapsed, type) => {
         console.log(collapsed, type);
       }}
+      style={{ backgroundColor: "white" }}
     >
       {/* Logo */}
       <div
         style={{
           width: "100%",
           height: "50px",
-          color: "white",
+          color: "#005f5a",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -30,8 +31,8 @@ export default function Sidebar() {
       </div>
       {/* Sidebar menu */}
       <Menu
-        theme="dark"
         mode="inline"
+        style={{ border: "none" }}
         defaultSelectedKeys={["dashboard"]}
         items={sidebarRoutesGenerator(routeSources)}
       />
