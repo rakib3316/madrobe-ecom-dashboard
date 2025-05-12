@@ -1,10 +1,9 @@
-import { Input, Space, Table, Tag } from "antd";
-import { useGetBlogsQuery } from "../../../redux/features/blog/blogApi";
-import getColumns from "./getColumns";
+import { SearchOutlined } from "@ant-design/icons";
+import { Input, Pagination, Table } from "antd";
 import { useState } from "react";
 import useDebounce from "../../../hooks/useDebounce";
-import { SearchOutlined } from "@ant-design/icons";
-import { Pagination } from "antd";
+import { useGetBlogsQuery } from "../../../redux/features/blog/blogApi";
+import getColumns from "./getColumns";
 import { batchUpdateState, getFilterQuery, getSortQuery } from "./utils";
 
 export default function Grid() {
@@ -54,7 +53,13 @@ export default function Grid() {
   };
 
   return (
-    <>
+    <div
+      style={{
+        backgroundColor: "white",
+        padding: "20px",
+        borderRadius: "10px",
+      }}
+    >
       <Input
         placeholder="Search..."
         size="middle"
@@ -66,7 +71,7 @@ export default function Grid() {
       <div
         style={{
           width: "100%",
-          height: "400px",
+          height: "450px",
           overflow: "auto",
           marginBottom: "10px",
         }}
@@ -82,6 +87,7 @@ export default function Grid() {
         />
       </div>
       <Pagination
+        className="custom-pagination"
         size="small"
         showTotal={(total, range) =>
           `${range[0]}-${range[1]} of ${total} items`
@@ -92,6 +98,6 @@ export default function Grid() {
         total={metaData?.total}
         onChange={onPageChange}
       />
-    </>
+    </div>
   );
 }

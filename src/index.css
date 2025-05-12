@@ -6,3 +6,39 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.ant-table-wrapper .ant-table-row-expand-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.ant-table-wrapper .ant-table-row-expand-icon::before {
+  top: 8px;
+}
+
+.ant-table-wrapper .ant-table-row-expand-icon::after {
+  inset-inline-start: 8px;
+}
+
+.custom-pagination .ant-pagination-item-active {
+  background-color: #009689; /* Active button background */
+  border-color: #009689; /* Active button border */
+  color: #fff; /* Active text color */
+}
+
+.custom-pagination .ant-pagination-item-active a {
+  color: #fff; /* Link inside the button */
+}
+
+.data-grid-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.table {
+  width: 100%;
+  height: 450px;
+  overflow: auto;
+  margin-bottom: 10px;
+}
