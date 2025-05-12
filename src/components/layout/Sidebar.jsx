@@ -20,7 +20,7 @@ export default function Sidebar() {
         style={{
           width: "100%",
           height: "50px",
-          color: "#005f5a",
+          color: "#009689",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",

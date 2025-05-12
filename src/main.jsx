@@ -15,12 +15,12 @@ createRoot(document.getElementById("root")).render(
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: "#005f5a", // your custom primary color
+          colorPrimary: "#009689", // your custom primary color
           fontFamily: "Poppins, sans-serif",
         },
         components: {
           Menu: {
-            itemSelectedBg: "#005f5a",
+            itemSelectedBg: "#009689",
             itemSelectedColor: "#ffffff",
           },
         },
