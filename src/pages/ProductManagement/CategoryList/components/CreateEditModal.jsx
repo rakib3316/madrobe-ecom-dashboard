@@ -10,7 +10,10 @@ import {
   Upload,
   message,
 } from "antd";
+import dayjs from "dayjs";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { getCurrentUser } from "../../../../redux/features/auth/authSlice";
 import { useAddCategoryMutation } from "../../../../redux/features/category/categoryApi";
 import { getBase64 } from "../utils";
 
@@ -65,12 +68,12 @@ export default function CreateEditModal({
   //handleReloadGrid,
 }) {
   const [form] = Form.useForm();
+  const user = useSelector(getCurrentUser);
   const [treeValue, setTreeValue] = useState();
   const [fileList, setFileList] = useState([]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
-  const [addCategory, { data, isLoading, isError, isSuccess }] =
-    useAddCategoryMutation();
+  const [addCategory, { isLoading }] = useAddCategoryMutation();
   const [messageApi, contextHolder] = message.useMessage();
   const isCreate = Object.is(selectedGridDataItem, null);
 
@@ -126,11 +129,27 @@ export default function CreateEditModal({
   };
 
   const onFinish = async (values) => {
-    let { category_name } = values;
+    let formData = new FormData();
 
-    console.log("form data >>", values);
+    const data = {
+      category_name: values.category_name,
+      parent_id: values.parent_id,
+      posted_by: user?.user_id,
+      posted_user: user?.fullName,
+      posted_date: dayjs().toString(),
+    };
 
-    addCategory({ category_name });
+    formData.append("file", values?.image?.file?.originFileObj);
+    formData.append("data", JSON.stringify(data));
+
+    try {
+      await addCategory(formData).unwrap();
+      messageApi.success("Category created successfully");
+      onCloseModal();
+      setFileList([]);
+    } catch (error) {
+      messageApi.error("Failed to create category");
+    }
   };
 
   return (
@@ -191,16 +210,7 @@ export default function CreateEditModal({
           <Input />
         </Form.Item>
         {/* Category list */}
-        <Form.Item
-          name="parent_id"
-          label="Parent category"
-          rules={[
-            {
-              required: true,
-              message: "Please select parent category",
-            },
-          ]}
-        >
+        <Form.Item name="parent_id" label="Parent category">
           <TreeSelect
             showSearch
             style={{ width: "100%" }}
@@ -244,7 +254,7 @@ export default function CreateEditModal({
         )}
 
         <div style={{ textAlign: "right" }}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={isLoading}>
             {isCreate ? "Create" : "Update"}
           </Button>
         </div>
