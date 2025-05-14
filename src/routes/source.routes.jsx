@@ -1,7 +1,7 @@
 import { NavLink } from "react-router";
 import Dashboard from "../pages/Dashboard";
 import AttributeList from "../pages/ProductManagement/AttributeList";
-import CategoryList from "../pages/ProductManagement/CategoryList/CategoryList";
+import CategoryList from "../pages/ProductManagement/CategoryList/Index";
 import ProductList from "../pages/ProductManagement/ProductList";
 
 export const routeSources = [
