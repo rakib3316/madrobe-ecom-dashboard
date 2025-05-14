@@ -27,10 +27,10 @@ const baseQueryWithRefreshToken = async (args, api, extraOtions) => {
 
     const data = await res.json();
 
-    if (data?.data?.access_token) {
+    if (data?.data?.accessToken) {
       const user = api.getState().auth.user;
 
-      api.dispatch(setUser({ user, token: data.data.access_token }));
+      api.dispatch(setUser({ user, token: data.data.accessToken }));
 
       result = await baseQuery(args, api, extraOtions);
     } else {

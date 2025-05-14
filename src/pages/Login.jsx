@@ -1,26 +1,24 @@
-import React, { useEffect } from "react";
-import styles from "../styles/login.module.css";
-import loginSvg from "../assets/login.svg";
 import { Button, Checkbox, Form, Input } from "antd";
-import { NavLink, useNavigate } from "react-router";
-import { useLoginMutation } from "../redux/features/auth/authApi";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { NavLink, useNavigate } from "react-router";
 import { toast } from "sonner";
+import loginSvg from "../assets/login.svg";
+import { useLoginMutation } from "../redux/features/auth/authApi";
 import { setUser } from "../redux/features/auth/authSlice";
+import styles from "../styles/login.module.css";
 
 export default function Login() {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [login] = useLoginMutation();
-  // console.log("data >>", data);
-  // console.log("error >>", error);
 
   const onFinish = async (values) => {
     const toastId = toast.loading("Logging in ...");
     try {
       let res = await login(values).unwrap();
-      console.log("res >>", res);
+
       dispatch(
         setUser({
           user: res.data.userDetails,
@@ -61,7 +59,6 @@ export default function Login() {
               layout="vertical"
               form={form}
               onFinish={onFinish}
-              autoComplete="off"
             >
               <Form.Item
                 label="Email"
