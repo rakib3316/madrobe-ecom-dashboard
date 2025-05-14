@@ -1,7 +1,8 @@
 // import Grid from "../../../../components/ui/DataGrid/Grid";
 import { SearchOutlined } from "@ant-design/icons";
-import { Badge, Flex, Image, Input, Table } from "antd";
+import { Badge, Flex, Image, Input, Pagination, Table } from "antd";
 import { useState } from "react";
+import { useGetCategoriesQuery } from "../../../../redux/features/category/categoryApi";
 import CreateEditModal from "./CreateEditModal";
 
 const columns = [
@@ -10,7 +11,7 @@ const columns = [
     dataIndex: "image",
     key: "image",
     width: "33.33%",
-    render: (image) => <Image src={image} width={70} />,
+    render: (image) => <Image src={image.url} width={70} />,
   },
   {
     title: "Category name",
@@ -71,6 +72,11 @@ const data = [
 ];
 
 export default function CategoryGrid() {
+  const [searchValue, setSearchValue] = useState("");
+  const [gridParams, setGridParams] = useState([]);
+  const { data, isFetching } = useGetCategoriesQuery(gridParams);
+  const dataSource = data?.data?.data;
+  const metaData = data?.data?.meta;
   // For all modal
   const [modalOpen, setModalOpen] = useState({
     createEdit: false,
@@ -126,13 +132,30 @@ export default function CategoryGrid() {
       {/* Datagrid */}
       <div className="table">
         <Table
+          rowKey={(record) => record._id.toString()}
           size="small"
           columns={columns}
-          dataSource={data}
+          dataSource={dataSource}
+          loading={isFetching}
           pagination={false}
           expandable={{
             indentSize: 30,
           }}
+        />
+      </div>
+      {/* Pagination */}
+      <div>
+        <Pagination
+          className="custom-pagination"
+          size="small"
+          showTotal={(total, range) =>
+            `${range[0]}-${range[1]} of ${total} items`
+          }
+          showSizeChanger
+          //onShowSizeChange={onPageSizeChange}
+          pageSize={metaData?.limit}
+          total={metaData?.total}
+          //onChange={onPageChange}
         />
       </div>
     </div>
