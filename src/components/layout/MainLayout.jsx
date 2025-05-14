@@ -22,15 +22,16 @@ export default function MainLayout() {
             <Outlet />
           </div>
         </Content>
-        <Footer
+        {/* <Footer
           style={{
             textAlign: "center",
             padding: "13px 50px",
             backgroundColor: "#f0fdfa",
+            zIndex: 99999,
           }}
         >
           Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
+        </Footer> */}
       </Layout>
     </Layout>
   );
